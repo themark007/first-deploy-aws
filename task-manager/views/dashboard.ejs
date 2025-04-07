@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<div class="container mx-auto p-6">
+  <div class="text-3xl mb-4">Your Tasks</div>
+  <form action="/tasks/add" method="POST" class="mb-6">
+    <input type="text" name="title" placeholder="New Task" class="p-2 rounded w-1/2">
+    <button class="btn">Add</button>
+  </form>
+
+  <div class="grid grid-cols-1 gap-4">
+    <% tasks.forEach(task => { %>
+      <div class="card fade-in flex justify-between items-center">
+        <span class="<%= task.status === 'done' ? 'line-through text-gray-400' : '' %>"><%= task.title %></span>
+        <% if (task.status === 'pending') { %>
+          <form action="/tasks/complete/<%= task.id %>" method="POST">
+            <button class="btn bg-green-500 hover:bg-green-700">Complete</button>
+          </form>
+        <% } %>
+      </div>
+    <% }) %>
+  </div>
+</div>
+<%- include('partials/footer') %>
